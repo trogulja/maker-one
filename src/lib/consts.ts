@@ -4,6 +4,8 @@ import * as fs from 'fs/promises';
 import open from 'open';
 import process from 'process';
 
+import type { ITargets } from '@appTypes';
+
 // If modifying these scopes, delete token.json.
 export const SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 export const HOME = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE || process.env.PWD as string;
@@ -32,3 +34,6 @@ if (!existsSync(TARGETS_PATH)) {
   console.log(`Please put targets.json in ${APP_PATH}`);
   process.exit(1);
 }
+
+const targets = JSON.parse((await fs.readFile(TARGETS_PATH)).toString()) as ITargets;
+export const PROJECTS_FOLDER = targets.projectsFolder;
