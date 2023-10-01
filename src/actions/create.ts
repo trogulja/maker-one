@@ -1,10 +1,11 @@
+import { Database } from 'bun:sqlite';
 import path from 'path';
 import * as fs from 'fs/promises';
+import open from 'open';
 import input from '@lib/input';
 import sheetsapi from '@lib/sheets';
 import { formatFolderName, formatTable } from '@lib/utility';
 import { PROJECTS_FOLDER, APP_PATH } from '@lib/consts';
-
 
 export default async function create() {
   const [name, rb] = await Promise.all([
@@ -37,18 +38,15 @@ export default async function create() {
   await fs.mkdir(path.join(folderPath, '02 Radni PSD'), { recursive: true });
   await fs.mkdir(path.join(folderPath, '03 Isporuka', folderName), { recursive: true });
 
-  await fs.copyFile(path.join(APP_PATH, 'template.cosessiondb'), path.join(folderPath, '01 RAW', `${folderName}.cosessiondb`));
+  const templatePath = path.join(APP_PATH, 'template.cosessiondb');
+  const dbPath = path.join(folderPath, '01 RAW', `${folderName}.cosessiondb`);
+  await fs.copyFile(templatePath, dbPath);
 
-  // let db = new sqlite3.Database(path.join(folderPath, '01 RAW', '/' + folderName + '.cosessiondb'))
+  const db = new Database(dbPath);
+  const stmt = db.prepare("UPDATE ZCOLLECTION SET ZCAPTURENAMINGNAME=(?) WHERE ZNAME='root'");
+  stmt.run(folderName);
+  stmt.finalize();
+  db.close();
 
-  // db.serialize(function() {
-  //   let stmt = db.prepare("UPDATE ZCOLLECTION SET ZCAPTURENAMINGNAME=(?) WHERE ZNAME='root'");
-  //   stmt.run(folderName);
-  //   stmt.finalize();
-  // });
-
-  // db.close();
-
-  // await open(path.join(folderPath, '01 RAW', '/' + folderName + '.cosessiondb'), {wait: false});
-
+  await open(dbPath, {wait: false});
 }
