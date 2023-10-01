@@ -11,8 +11,6 @@ const logo = `
          ▀
 
 
-
-
 `;
 
 export default function showLogo() {
