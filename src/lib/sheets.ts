@@ -1,43 +1,13 @@
-import path from 'path';
 import * as fs from 'fs/promises';
-import { existsSync, readFileSync } from 'fs';
-import process from 'process';
+import { readFileSync } from 'fs';
 import { authenticate } from '@google-cloud/local-auth';
 import { google } from 'googleapis';
-import open from 'open';
 import { arraysToObjects, getRb } from '@lib/utility';
+
+import { SCOPES, TOKEN_PATH, CREDENTIALS_PATH, TARGETS_PATH } from '@lib/consts';
 
 import type { OAuth2Client } from 'google-auth-library';
 import type { IProjects, ITargets } from '@appTypes';
-
-// If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-const HOME = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE || process.env.PWD as string;
-const APP_PATH = path.join(HOME, '.maker-one');
-const TOKEN_PATH = path.join(APP_PATH, 'token.json');
-const CREDENTIALS_PATH = path.join(APP_PATH, 'credentials.json');
-const TARGETS_PATH = path.join(APP_PATH, 'targets.json');
-
-if (!existsSync(HOME)) {
-  console.log('Unable to find home directory');
-  process.exit(1);
-}
-
-if (!existsSync(APP_PATH)) {
-  await fs.mkdir(APP_PATH);
-}
-
-if (!existsSync(CREDENTIALS_PATH)) {
-  open(APP_PATH);
-  console.log(`Please put credentials.json in ${APP_PATH}`);
-  process.exit(1);
-}
-
-if (!existsSync(TARGETS_PATH)) {
-  open(APP_PATH);
-  console.log(`Please put targets.json in ${APP_PATH}`);
-  process.exit(1);
-}
 
 class SheetsApi {
   declare client: OAuth2Client | null;
