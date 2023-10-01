@@ -1,20 +1,9 @@
 import inquirer from 'inquirer';
+import { formatDate } from '@lib/utility';
 
 import type {TState} from '@appTypes';
 
 class Input {
-  async projectName() {
-    const response: {name: string} = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'name',
-        message: 'What is the name of the project?',
-      },
-    ]);
-
-    return response.name;
-  }
-
   get randInitMenuMessage() {
     const messages = [
       'Camera roll ready! What\'s the frame-worthy idea today?',
@@ -86,11 +75,36 @@ class Input {
       {
         type: 'number',
         name: 'amount',
-        message: 'How many recent projects do you want to see?',
+        message: 'How many?',
       },
     ]);
 
     return response.amount;
+  }
+
+  async projectName() {
+    const response: {name: string} = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Name?',
+      },
+    ]);
+
+    return response.name;
+  }
+
+  async projectDate() {
+    const response: {date: string} = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'date',
+        default: formatDate(new Date()),
+        message: 'Date?',
+      },
+    ]);
+
+    return response.date;
   }
 }
 

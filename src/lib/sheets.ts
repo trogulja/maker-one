@@ -5,9 +5,10 @@ import process from 'process';
 import { authenticate } from '@google-cloud/local-auth';
 import { google } from 'googleapis';
 import open from 'open';
-import { arraysToObjects } from '@lib/utility';
+import { arraysToObjects, getRb } from '@lib/utility';
 
 import type { OAuth2Client } from 'google-auth-library';
+import type { IProjects, ITargets } from '@appTypes';
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -36,19 +37,6 @@ if (!existsSync(TARGETS_PATH)) {
   open(APP_PATH);
   console.log(`Please put targets.json in ${APP_PATH}`);
   process.exit(1);
-}
-
-interface ITargets {
-  sheetId: string
-  sheetRange: string
-  projectsFolder: string
-}
-
-interface IProjects {
-  Rb: string // YYnnn format (e.g. 23078)
-  Datum: string // D.M.YYYY. format (e.g. 28.9.2023.)
-  Projekt: string // just a name (e.g. "Mehrzer Inox 8L")
-  "Ime projekta": string // project folder name (e.g. "23078-09-28 Mehrzer Inox 8L")
 }
 
 class SheetsApi {
@@ -110,6 +98,31 @@ class SheetsApi {
     return res.data.values;
   }
 
+  private async appendSheetData(spreadsheetId: string, range: string, values: string[][]) {
+    const auth = await this.authorize();
+    const sheets = google.sheets({version: 'v4', auth});
+    const res = await sheets.spreadsheets.values.append({
+      auth,
+      spreadsheetId,
+      range,
+      valueInputOption: 'USER_ENTERED',
+      insertDataOption: 'OVERWRITE',
+      requestBody: {
+        values,
+      },
+    });
+    return res.data;
+  }
+
+  async addNewProject(values: string[][]) {
+    const res = await this.appendSheetData(
+      this.target.sheetId,
+      this.target.sheetRange,
+      values
+    );
+    return res;
+  }
+
   async printTest() {
     const rows = await this.getSheetData(
       '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
@@ -139,6 +152,25 @@ class SheetsApi {
     }
 
     return arraysToObjects(rows) as unknown as IProjects[];
+  }
+
+  async getNextRb() {
+    const projects = await this.getProjects();
+    return getRb(projects?.pop()?.Rb)
+  }
+
+  async appendProject(values: string[][]) {
+    const auth = await this.authorize();
+    const sheets = google.sheets({version: 'v4', auth});
+    const res = await sheets.spreadsheets.values.append({
+      spreadsheetId: this.target.sheetId,
+      range: this.target.sheetRange,
+      valueInputOption: 'USER_ENTERED',
+      requestBody: {
+        values,
+      },
+    });
+    return res.data;
   }
 }
 
