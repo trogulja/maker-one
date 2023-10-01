@@ -6,6 +6,7 @@
   "description": "A CLI interface to create a new Capture One project and log it in Google sheets",
   "scripts": {
     "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --compile --minify --outfile dist/maker-one",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -21,7 +22,6 @@
     "googleapis": "105",
     "inquirer": "^9.2.11",
     "lolcatjs": "^2.4.1",
-    "nanospinner": "^1.1.0",
-    "open": "^9.1.0"
+    "nanospinner": "^1.1.0"
   }
 }

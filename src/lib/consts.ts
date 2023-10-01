@@ -1,7 +1,6 @@
 import path from 'path';
 import { existsSync } from 'fs';
 import * as fs from 'fs/promises';
-import open from 'open';
 import process from 'process';
 
 import type { ITargets } from '@appTypes';
@@ -24,13 +23,11 @@ if (!existsSync(APP_PATH)) {
 }
 
 if (!existsSync(CREDENTIALS_PATH)) {
-  open(APP_PATH);
   console.log(`Please put credentials.json in ${APP_PATH}`);
   process.exit(1);
 }
 
 if (!existsSync(TARGETS_PATH)) {
-  open(APP_PATH);
   console.log(`Please put targets.json in ${APP_PATH}`);
   process.exit(1);
 }

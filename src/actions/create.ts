@@ -1,7 +1,7 @@
 import { Database } from 'bun:sqlite';
+import { exec } from 'child_process';
 import path from 'path';
 import * as fs from 'fs/promises';
-import open from 'open';
 import input from '@lib/input';
 import sheetsapi from '@lib/sheets';
 import { formatFolderName, formatTable } from '@lib/utility';
@@ -48,5 +48,7 @@ export default async function create() {
   stmt.finalize();
   db.close();
 
-  await open(dbPath, {wait: false});
+  exec(`open "${dbPath}"`, (error, stdout, stderr) => {
+    if (stderr) console.log(stderr);
+  });
 }
