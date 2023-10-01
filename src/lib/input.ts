@@ -86,7 +86,7 @@ class Input {
       {
         type: 'number',
         name: 'amount',
-        message: 'How many recent projects do you want to list?',
+        message: 'How many recent projects do you want to see?',
       },
     ]);
 
