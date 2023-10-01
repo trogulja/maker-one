@@ -20,7 +20,9 @@
     ],
     "baseUrl": "./src",
     "paths": {
-      "@lib/*": ["./lib/*"]
+      "@lib/*": ["./lib/*"],
+      "@actions": ["./actions/index.ts"],
+      "@appTypes": ["./types/app.d.ts"],
     }
   }
 }
