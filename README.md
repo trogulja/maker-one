@@ -116,7 +116,7 @@ Inside of your home directory, you should end up with a `.maker-one` directory w
 
 - [x] Update Readme
 - [x] Setup Google Projects / OAuth credentials
-- [ ] Refactor flow
-- [ ] Create package and publishing flow
-- [ ] Publish binary to npm
+- [x] Refactor flow
+- [x] Create package and publishing flow
+- [x] Publish binary to github
 - [ ] Add tests
