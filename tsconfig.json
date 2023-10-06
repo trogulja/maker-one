@@ -23,6 +23,7 @@
       "@lib/*": ["./lib/*"],
       "@actions": ["./actions/index.ts"],
       "@appTypes": ["./types/app.d.ts"],
+      "@package": ["../package.json"],
     }
   }
 }

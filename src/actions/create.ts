@@ -35,7 +35,9 @@ export default async function create() {
   await fs.mkdir(path.join(folderPath, '01 RAW', 'Output'), { recursive: true });
   await fs.mkdir(path.join(folderPath, '01 RAW', 'Selects'), { recursive: true });
   await fs.mkdir(path.join(folderPath, '01 RAW', 'Trash'), { recursive: true });
+  await fs.mkdir(path.join(folderPath, '01 RAW Video'), { recursive: true });
   await fs.mkdir(path.join(folderPath, '02 Radni PSD'), { recursive: true });
+  await fs.mkdir(path.join(folderPath, '02 Radni Materijali'), { recursive: true });
   await fs.mkdir(path.join(folderPath, '03 Isporuka', folderName), { recursive: true });
 
   const templatePath = path.join(APP_PATH, 'template.cosessiondb');

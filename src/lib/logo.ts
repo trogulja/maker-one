@@ -1,4 +1,5 @@
 import lolcatjs from 'lolcatjs';
+const version = require('@package').version;
 
 const logo = `
 
@@ -9,6 +10,7 @@ const logo = `
      █     █   █   ▀███▀     █             █  █ █ ▀███▀
     ▀     █   ▀             ▀              █   ██
          ▀
+                                           v${version}
 
 
 `;
