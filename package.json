@@ -2,7 +2,7 @@
   "name": "maker-one",
   "module": "src/index.ts",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A CLI interface to create a new Capture One project and log it in Google sheets",
   "scripts": {
     "start": "bun run src/index.ts",

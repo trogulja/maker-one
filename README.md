@@ -13,6 +13,7 @@ A CLI interface to create a new Capture One project and log it in Google sheets.
   - [Setting Up Environment (for each user)](#setting-up-environment-for-each-user)
     - [Setting Up Targets (targets.json)](#setting-up-targets-targetsjson)
     - [Setting Up Credentials](#setting-up-credentials)
+  - [Updating](#updating)
 - [File Structure](#file-structure)
 - [Usage](#usage)
 - [Flow](#flow)
@@ -78,6 +79,13 @@ This is done by creating a `targets.json` file in `~/.maker-one` directory. The 
 ### Setting Up Credentials
 
 When you first run the script, it will ask you to authorize the app to access your Google account. This will create a `token.json` file in your `~/.maker-one` directory. The token file is used to authenticate the app when it tries to access Google API and is specific to your Google account. Keep it safe and don't share it with anyone.
+
+## Updating
+
+Once installed (and all credentials and targets are set up), you can update the app via included `bin/install.sh` script. It will:
+- download the latest release from github
+- replace the binary `~/bin/maker-one`
+- delete the `~/.maker-one/token.json` file (as it is no longer valid and you will have to re-authorize the app to access your Google account)
 
 # File Structure
 

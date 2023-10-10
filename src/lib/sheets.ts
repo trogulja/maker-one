@@ -24,7 +24,7 @@ class SheetsApi {
       const credentials = JSON.parse(content);
       this.client = google.auth.fromJSON(credentials) as OAuth2Client;
     } catch (err) {
-      console.log('Error while loading saved credentials', err)
+      // console.log('Error while loading saved credentials', err)
       return null;
     }
   }
