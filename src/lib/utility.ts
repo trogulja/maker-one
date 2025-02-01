@@ -20,9 +20,9 @@ export function formatDate(date: Date) {
   return `${day}.${month}.${year}.`;
 }
 
-export function formatFolderName({rb, date, name}: {rb: string, date: string, name: string}) {
-  const [day, month] = date.split('.').map((x) => parseInt(x).toString().padStart(2, '0'));
-  return `${rb}-${month}-${day} ${name}`;
+export function formatFolderName({date, name}: {date: string, name: string}) {
+  const [day, month, year] = date.split('.').map((x) => parseInt(x).toString().padStart(2, '0'));
+  return `${year}-${month}-${day} ${name}`;
 }
 
 export function getRb(oldRb?: string) {

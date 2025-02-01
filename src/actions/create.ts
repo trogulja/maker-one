@@ -14,7 +14,7 @@ export default async function create() {
   ]);
 
   const date = await input.projectDate();
-  const folderName = formatFolderName({rb, date, name});
+  const folderName = formatFolderName({date, name});
 
   const values = [[rb, date, name, folderName]];
   const project = {
